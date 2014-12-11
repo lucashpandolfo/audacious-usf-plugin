@@ -14,7 +14,7 @@ After having to reinstall audacious to a new pc, i found myself needing once agi
 # Installation
 
 ```bash
-> aclocal
+> ./autogen.sh
 > ./configure
 > make
 ```
