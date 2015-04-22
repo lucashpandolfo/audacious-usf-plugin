@@ -5,26 +5,23 @@ dnl ***
 dnl Initialize
 dnl ==========
 AC_PREREQ([2.59])
-AC_INIT([audacious-plugins], [3.4-devel])
-AC_COPYRIGHT([(C) 2005-2012 Audacious Team])
+AC_INIT([audacious-plugins], [3.5])
+AC_COPYRIGHT([Copyright (C) 2001-2015 Audacious developers and others])
 
-AC_SUBST([PACKAGE], [AC_PACKAGE_TARNAME])
-AC_SUBST([VERSION], [AC_PACKAGE_VERSION])
-AC_DEFINE_UNQUOTED([PACKAGE], "$PACKAGE", [Name of package])
-AC_DEFINE_UNQUOTED([VERSION], "$VERSION", [Version number of package])
+AC_DEFINE_UNQUOTED([PACKAGE], "$PACKAGE_NAME", [Name of package])
+AC_DEFINE_UNQUOTED([VERSION], "$PACKAGE_VERSION", [Version number of package])
 
-AC_CANONICAL_HOST
-AC_CANONICAL_TARGET
+AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIR([m4])
 
 AUD_COMMON_PROGS
 
-BUILDSYS_INIT
 BUILDSYS_SHARED_LIB
 
 dnl Headers and functions
 dnl =====================
-AC_CHECK_FUNCS([fcntl fsync mkdtemp])
+AC_CHECK_FUNCS([mkdtemp])
 
 dnl gettext
 dnl =======
@@ -38,9 +35,9 @@ LIBS="$LIBS $LIBINTL"
 dnl Check for Audacious
 dnl ===================
 
-PKG_CHECK_MODULES(AUDACIOUS, [audacious >= 3.4],
+PKG_CHECK_MODULES(AUDACIOUS, [audacious >= 3.5],
     [],
-    [AC_MSG_ERROR([Cannot find Audacious 3.4; have you installed Audacious yet?])]
+    [AC_MSG_ERROR([Cannot find Audacious 3.5; have you installed Audacious yet?])]
 )
 
 CPPFLAGS="$CPPFLAGS $AUDACIOUS_CFLAGS"
@@ -61,9 +58,8 @@ dnl USF
 dnl ===
 
 AC_ARG_ENABLE(usf,
- [  --disable-usf           disable the USF input plugin],
- [enable_usf=$enableval],
- [enable_usf=yes])
+ [AS_HELP_STRING([--disable-usf], [disable the USF input plugin])],
+ [enable_usf=$enableval], [enable_usf=yes])
 
 if test "$enable_usf" = "yes"; then
     AC_MSG_CHECKING([if your platform is supported for the USF plugin])
@@ -109,18 +105,8 @@ AC_SUBST(GENERAL_PLUGIN_DIR)
 AC_SUBST(VISUALIZATION_PLUGIN_DIR)
 AC_SUBST(CONTAINER_PLUGIN_DIR)
 AC_SUBST(TRANSPORT_PLUGIN_DIR)
-AC_SUBST(pluginsubs)
 
-dnl XXX Work around some autoconf bugs.
-if test "x$prefix" = "xNONE"; then
-        prefix="${ac_default_prefix}"
-fi
-
-if test -z "$datadir"; then
-	datadir="${prefix}/share"
-fi
-
-localedir="$datadir/locale"
+localedir="$datarootdir/locale"
 AC_SUBST(localedir)
 
 AC_SUBST(EFFECT_PLUGINS)
@@ -130,13 +116,33 @@ AC_SUBST(OUTPUT_PLUGINS)
 AC_SUBST(VISUALIZATION_PLUGINS)
 AC_SUBST(CONTAINER_PLUGINS)
 AC_SUBST(TRANSPORT_PLUGINS)
-AC_SUBST(GCC42_CFLAGS)
+
+
+dnl Reliably #include "config.h" (for large file support)
+dnl =====================================================
+CPPFLAGS="$CPPFLAGS -include config.h"
+
+
+dnl Generate config files
+dnl =====================
 
 AC_CONFIG_FILES([
-	buildsys.mk
-	extra.mk
+    buildsys.mk
+    extra.mk
 ])
 
-BUILDSYS_TOUCH_DEPS
 AC_OUTPUT
 
+
+dnl Print results
+dnl =============
+
+echo
+echo "Configuration:"
+echo
+echo "  Install path:                           $plugindir"
+echo
+echo "  Input Plugins"
+echo "  -------------"
+echo "  Nintendo 64 music (usf, miniusf):       $enable_usf"
+echo

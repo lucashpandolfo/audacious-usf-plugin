@@ -214,9 +214,7 @@ typedef struct {
     uint32_t NoOfIMEMBlocks;
     uint32_t NoOfPifRomBlocks;
 } N64_Blocks_t;
-
-extern N64_Blocks_t N64_Blocks;
-
+#warning "eh? N64_Blocks_t N64_Blocks;"
 #pragma pack(pop)
 
 uint8_t *Compiler4300iBlock(void);
@@ -232,9 +230,10 @@ void GenerateSectionLinkage(BLOCK_SECTION * Section);
 void InitilizeInitialCompilerVariable(void);
 int UnMap_TempRegSet(REG_INFO * RegWorking);
 
+extern N64_Blocks_t N64_Blocks;
 extern uint32_t *TLBLoadAddress, TargetIndex;
 extern TARGET_INFO *TargetInfo;
-extern uint16_t FPU_RoundingMode;
+extern int16_t FPU_RoundingMode;
 
 #define SetJump32(Loc,JumpLoc) *(uint32_t *)(Loc)= (uint32_t)(((uint32_t)(intptr_t)(JumpLoc)) - (((uint32_t)(intptr_t)(Loc)) + 4));
 #define SetJump8(Loc,JumpLoc)  *(uint8_t  *)(Loc)= (uint8_t )(((uint8_t )(intptr_t)(JumpLoc)) - (((uint8_t )(intptr_t)(Loc)) + 1));

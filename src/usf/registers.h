@@ -336,68 +336,72 @@
 #define	FPCSR_RM_RP				0x00000002	/* round to positive infinity */
 #define	FPCSR_RM_RM				0x00000003	/* round to negative infinity */
     
-#define FPR_Type(Reg)	(Reg) == R4300i_COP1_S ? "S" : (Reg) == R4300i_COP1_D ? "D" :\
-    (Reg) == R4300i_COP1_W ? "W" : "L"  typedef struct {
-    uint32_t PROGRAM_COUNTER;
-    MIPS_DWORD GPR[32];
-    MIPS_DWORD FPR[32];
-    uint32_t CP0[33];
-    uint32_t FPCR[32];
-    MIPS_DWORD HI;
-    MIPS_DWORD LO;
-    uint32_t RDRAM[10];
-    uint32_t SP[10];
-    uint32_t DPC[10];
-    uint32_t MI[4];
-    uint32_t VI[14];
-    uint32_t AI[6];
-    uint32_t PI[13];
-    uint32_t RI[8];
-    uint32_t SI[4];
-    int8_t PIF_Ram[0x40];
-} N64_REGISTERS;
-extern uint32_t PROGRAM_COUNTER, *CP0, *FPCR, *RegRDRAM, *RegSP,
-    *RegDPC, *RegMI, *RegVI, *RegAI, *RegPI,  *RegRI, *RegSI, HalfLine,
-    RegModValue, ViFieldNumber, LLBit, LLAddr;
-extern void *FPRDoubleLocation[32], *FPRFloatLocation[32];
-extern MIPS_DWORD *GPR, *FPR, HI, LO;
-extern N64_REGISTERS *Registers;
-enum FPU_Format { FPU_Unkown, FPU_Dword, FPU_Qword, FPU_Float,
-	FPU_Double 
+#define FPR_Type(Reg)	(Reg) == R4300i_COP1_S ? "S" : (Reg) == R4300i_COP1_D ? "D" : \
+        (Reg) == R4300i_COP1_W ? "W" : "L"  
+
+typedef struct {
+    uint32_t PROGRAM_COUNTER;
+    MIPS_DWORD GPR[32];
+    MIPS_DWORD FPR[32];
+    uint32_t CP0[33];
+    uint32_t FPCR[32];
+    MIPS_DWORD HI;
+    MIPS_DWORD LO;
+    uint32_t RDRAM[10];
+    uint32_t SP[10];
+    uint32_t DPC[10];
+    uint32_t MI[4];
+    uint32_t VI[14];
+    uint32_t AI[6];
+    uint32_t PI[13];
+    uint32_t RI[8];
+    uint32_t SI[4];
+    int8_t PIF_Ram[0x40];
+} N64_REGISTERS;
+
+extern uint32_t PROGRAM_COUNTER, *CP0, *FPCR, *RegRDRAM, *RegSP;
+extern uint32_t *RegDPC, *RegMI, *RegVI, *RegAI, *RegPI,  *RegRI, *RegSI, HalfLine;
+extern uint32_t RegModValue, ViFieldNumber, LLBit, LLAddr;
+extern void *FPRDoubleLocation[32], *FPRFloatLocation[32];
+extern MIPS_DWORD *GPR, *FPR, HI, LO;
+extern N64_REGISTERS *Registers;
+
+enum FPU_Format { FPU_Unkown, FPU_Dword, FPU_Qword, FPU_Float,
+                  FPU_Double 
 };
-enum FPU_RoundingModel { RoundUnknown, RoundDefault, RoundTruncate,
-	RoundNearest, RoundDown, RoundUp 
+enum FPU_RoundingModel { RoundUnknown, RoundDefault, RoundTruncate,
+                         RoundNearest, RoundDown, RoundUp 
 };
-void ChangeFPURegFormat(BLOCK_SECTION * Section, int32_t Reg,
-			  int32_t OldFormat, int32_t NewFormat,
-			  int32_t RoundingModel);
-void ChangeMiIntrMask(void);
-void ChangeMiModeReg(void);
-void ChangeSpStatus(void);
-void InitalizeR4300iRegisters(void);
-uint32_t Is8BitReg(int32_t x86Reg);
-void Load_FPR_ToTop(BLOCK_SECTION * Section, int32_t Reg,
-		     int32_t RegToLoad, int32_t Format);
-void Map_GPR_32bit(BLOCK_SECTION * Section, int32_t Reg,
-		    uint32_t SignValue, int32_t MipsRegToLoad);
-void Map_GPR_64bit(BLOCK_SECTION * Section, int32_t Reg,
-		    int32_t MipsRegToLoad);
-int32_t Map_TempReg(BLOCK_SECTION * Section, int32_t x86Reg,
-		     int32_t MipsReg, uint32_t LoadHiWord);
-uint32_t RegInStack(BLOCK_SECTION * Section, int32_t Reg, int32_t Format);
-void ProtectGPR(BLOCK_SECTION * Section, uint32_t Reg);
-void SetFpuLocations(void);
-int32_t StackPosition(BLOCK_SECTION * Section, int32_t Reg);
-int UnMap_8BitTempReg(BLOCK_SECTION * Section);
-void UnMap_AllFPRs(BLOCK_SECTION * Section);
-void UnMap_FPR(BLOCK_SECTION * Section, int32_t Reg,
-		int32_t WriteBackValue);
-void UnMap_GPR(BLOCK_SECTION * Section, uint32_t Reg,
-		int32_t WriteBackValue);
-uint32_t UnMap_X86reg(BLOCK_SECTION * Section, uint32_t x86Reg);
-void UnProtectGPR(BLOCK_SECTION * Section, uint32_t Reg);
-void UpdateCurrentHalfLine(void);
-void WriteBackRegisters(BLOCK_SECTION * Section);
-void SetupRegisters(N64_REGISTERS * n64_Registers);
-
-#endif	/*  */
+void ChangeFPURegFormat(BLOCK_SECTION * Section, int32_t Reg,
+                        int32_t OldFormat, int32_t NewFormat,
+                        int32_t RoundingModel);
+void ChangeMiIntrMask(void);
+void ChangeMiModeReg(void);
+void ChangeSpStatus(void);
+void InitalizeR4300iRegisters(void);
+uint32_t Is8BitReg(int32_t x86Reg);
+void Load_FPR_ToTop(BLOCK_SECTION * Section, int32_t Reg,
+                    int32_t RegToLoad, int32_t Format);
+void Map_GPR_32bit(BLOCK_SECTION * Section, int32_t Reg,
+                   uint32_t SignValue, int32_t MipsRegToLoad);
+void Map_GPR_64bit(BLOCK_SECTION * Section, int32_t Reg,
+                   int32_t MipsRegToLoad);
+int32_t Map_TempReg(BLOCK_SECTION * Section, int32_t x86Reg,
+                    int32_t MipsReg, uint32_t LoadHiWord);
+uint32_t RegInStack(BLOCK_SECTION * Section, int32_t Reg, int32_t Format);
+void ProtectGPR(BLOCK_SECTION * Section, uint32_t Reg);
+void SetFpuLocations(void);
+int32_t StackPosition(BLOCK_SECTION * Section, int32_t Reg);
+int UnMap_8BitTempReg(BLOCK_SECTION * Section);
+void UnMap_AllFPRs(BLOCK_SECTION * Section);
+void UnMap_FPR(BLOCK_SECTION * Section, int32_t Reg,
+               int32_t WriteBackValue);
+void UnMap_GPR(BLOCK_SECTION * Section, uint32_t Reg,
+               int32_t WriteBackValue);
+uint32_t UnMap_X86reg(BLOCK_SECTION * Section, uint32_t x86Reg);
+void UnProtectGPR(BLOCK_SECTION * Section, uint32_t Reg);
+void UpdateCurrentHalfLine(void);
+void WriteBackRegisters(BLOCK_SECTION * Section);
+void SetupRegisters(N64_REGISTERS * n64_Registers);
+
+#endif	/*  */

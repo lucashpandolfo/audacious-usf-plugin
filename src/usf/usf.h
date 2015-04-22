@@ -9,8 +9,9 @@
 #include <time.h>
 #include <stdint.h>
 
-
-
+#include <libaudcore/plugin.h>
+#include "plugin.h"
+#include <glib.h>
 #include "cpu.h"
 #include "memory.h"
 
@@ -23,5 +24,9 @@ extern double seek_time, play_time, rel_volume;
 
 extern uint32_t enablecompare, enableFIFOfull;
 
+bool usf_init();
+int LoadUSF(const gchar * fn, VFSFile * fil);
+bool usf_play(USFPlugin* context, const gchar * filename, VFSFile* file);
+Tuple usf_get_song_tuple(const gchar * fn, VFSFile * fil);
 
 #endif

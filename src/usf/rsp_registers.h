@@ -23,8 +23,12 @@
  * should be forwarded to them so if they want them.
  *
  */  
+
+#ifndef _RSP_REGISTERS_H_
+#define _RSP_REGISTERS_H_
     
 #include "types.h"
+#include "rsp.h"
     
 #define SP_STATUS_HALT			0x001		/* Bit  0: halt */
 #define SP_STATUS_BROKE			0x002		/* Bit  1: broke */
@@ -92,9 +96,7 @@
 #define DPC_STATUS_START_VALID		0x400	/* Bit 10: start valid */
     
 #define R4300i_SP_Intr			0x1
-extern char *x86_Strings[8];
-extern char *GPR_Strings[32];
-
+
 #define x86_Name(Reg) (x86_Strings[(Reg)])
 #define GPR_Name(Reg) (GPR_Strings[(Reg)])
     
@@ -127,19 +129,20 @@
     (Reg) == 12 ? "DP clock counter" : \
     (Reg) == 13 ? "DP buffer busy counter" : \
     (Reg) == 14 ? "DP pipe busy counter" : \
-    (Reg) == 15 ? "DP TMEM load counter" : \"Unknown Register"  
+    (Reg) == 15 ? "DP TMEM load counter" : \"Unknown Register"  
 #define ElementSpecifier(Elem)\
 (Elem) == 0 ? "" : (Elem) == 1 ? "" : (Elem) == 2 ? " [0q]" : \
     (Elem) == 3 ? " [1q]" : (Elem) == 4 ? " [0h]" : (Elem) ==
-    5 ? " [1h]" : \(Elem) == 6 ? " [2h]" : (Elem) ==
-    7 ? " [3h]" : (Elem) == 8 ? " [0]" : \(Elem) ==
+    5 ? " [1h]" : \(Elem) == 6 ? " [2h]" : (Elem) ==
+    7 ? " [3h]" : (Elem) == 8 ? " [0]" : \(Elem) ==
     9 ? " [1]" : (Elem) == 10 ? " [2]" : (Elem) ==
-    11 ? " [3]" : \(Elem) == 12 ? " [4]" : (Elem) ==
-    13 ? " [5]" : (Elem) == 14 ? " [6]" : \(Elem) ==
-    15 ? " [7]" : "Unknown Element"  void InitilizeRSPRegisters(void);
-
+    11 ? " [3]" : \(Elem) == 12 ? " [4]" : (Elem) ==
+    13 ? " [5]" : (Elem) == 14 ? " [6]" : \(Elem) ==
+    15 ? " [7]" : "Unknown Element"  void InitilizeRSPRegisters(void);
+
 /*** RSP Registers ***/ 
-extern MIPSUWORD RSP_GPR[32], RSP_Flags[4];
-extern MIPSUDWORD RSP_ACCUM[8];
-extern VECTOR RSP_Vect[32];
-
+MIPSUWORD RSP_GPR[32], RSP_Flags[4];
+MIPSUDWORD RSP_ACCUM[8];
+VECTOR RSP_Vect[32];
+
+#endif /* _RSP_REGISTERS_H_ */

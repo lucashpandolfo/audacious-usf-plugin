@@ -26,6 +26,9 @@
 
 #include <stdint.h>
 
+#ifndef _X86_H_
+#define _X86_H_
+
 #define PUTDST8(dest,value)  {(*((uint8_t *)(dest))=(uint8_t)(intptr_t)(value)); dest += 1;}
 #define PUTDST16(dest,value) {(*((uint16_t *)(dest))=(uint16_t)(intptr_t)(value)); dest += 2;}
 #define PUTDST32(dest,value) {(*((uint32_t *)(dest))=(uint32_t)(intptr_t)(value)); dest += 4;}
@@ -40,6 +43,7 @@
 #define X64_Ext		0x20
 
 extern uint8_t Indexes[9];
+
 
 enum x86RegValues {
 
@@ -179,8 +183,6 @@ enum x86FpuValues {
 #define X64_Reg		0
 #define X64_Ext		0
 
-
-extern uint8_t Indexes[9];
 
 enum x86RegValues {
 
@@ -346,8 +348,8 @@ void AndVariableDispToX86Reg(void *Variable, int32_t x86Reg,
 			     int32_t AddrReg, int32_t Multiplier);
 void AndX86RegToX86Reg(int32_t Destination, int32_t Source);
 void BreakPoint(void);
-void Call_Direct(void *FunctAddress);
-void Call_Indirect(void *FunctAddress);
+void Call_Direct(void (*FunctAddress)());
+void Call_Indirect(void (*FunctAddress)());
 void CompConstToVariable(uint32_t Const, void *Variable);
 void CompConstToX86reg(int32_t x86Reg, uint32_t Const);
 void CompX86regToVariable(int32_t x86Reg, void *Variable);
@@ -575,3 +577,6 @@ void fpuSubReg(int32_t x86reg);
 void fpuSubRegPop(int32_t x86reg);
 
 void MoveVariable64ToX86reg(void *Variable, int32_t x86reg);
+
+
+#endif /* _X86_H_ */

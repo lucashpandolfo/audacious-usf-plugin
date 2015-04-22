@@ -23,10 +23,15 @@
  * should be forwarded to them so if they want them.
  *
  */  
+
+#ifndef _DMA_H_
+#define _DMA_H_
+
 void PI_DMA_READ(void);
-void PI_DMA_WRITE(void);
-void SI_DMA_READ(void);
-void SI_DMA_WRITE(void);
-void SP_DMA_READ(void);
-void SP_DMA_WRITE(void);
-
+void PI_DMA_WRITE(void);
+void SI_DMA_READ(void);
+void SI_DMA_WRITE(void);
+void SP_DMA_READ(void);
+void SP_DMA_WRITE(void);
+
+#endif /* _DMA_H_ */

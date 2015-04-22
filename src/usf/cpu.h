@@ -38,63 +38,70 @@
 #include "pif.h"
 #include "opcode.h"
 #include "usf.h"
+
+#include "main.h"
     
 #ifdef __LP64__
 #define USEX86
 #define EXTREGS
-#endif	/*  */
-    typedef struct {
-    int32_t DoSomething;
-    int32_t CloseCPU;
-    int32_t CheckInterrupts;
-    int32_t DoInterrupt;
-} CPU_ACTION;
-
-#define MaxTimers				3
-#define CompareTimer			0
-#define ViTimer					1
-#define AiTimer					2
-    typedef struct {
-    int32_t NextTimer[MaxTimers];
-    int32_t Active[MaxTimers];
-    int32_t CurrentTimerType;
-    int32_t Timer;
-} SYSTEM_TIMERS;
-void ChangeCompareTimer(void);
-void ChangeTimer(int32_t Type, int32_t Value);
-void CheckTimer(void);
-void CloseCpu(void);
-int32_t DelaySlotEffectsCompare(uint32_t PC, uint32_t Reg1,
-				 uint32_t Reg2);
-int32_t DelaySlotEffectsJump(uint32_t JumpPC);
-void DoSomething(void);
-void InPermLoop(void);
-void InitiliazeCPUFlags(void);
-void RefreshScreen(void);
-void RunRsp(void);
-void StartEmulation(void);
-void TimerDone(void);
-void RecompileTimerDone(void);
-void controlfp(uint32_t mask);
-void StartEmulationFromSave(void *savestate);
-
-#define NORMAL					0
-#define DO_DELAY_SLOT			1
-#define DO_END_DELAY_SLOT		2
-#define DELAY_SLOT				3
-#define END_DELAY_SLOT			4
-#define LIKELY_DELAY_SLOT		5
-#define JUMP	 				6
-#define DELAY_SLOT_DONE			7
-#define LIKELY_DELAY_SLOT_DONE	8
-#define END_BLOCK 				9
-enum SaveType { Auto, Eeprom_4K, Eeprom_16K, Sram, FlashRam 
-};
-extern uint32_t NextInstruction, JumpToLocation, ManualPaused,
-    CPU_Paused, CountPerOp, AudioIntrReg, *WaitMode, CPU_Type;
-extern CPU_ACTION *CPU_Action;
-extern SYSTEM_TIMERS *Timers;
-extern OPCODE Opcode;
-extern uint32_t CPURunning;
+#endif	/*  */
 
-#endif	/*  */
+typedef struct {
+    int32_t DoSomething;
+    int32_t CloseCPU;
+    int32_t CheckInterrupts;
+    int32_t DoInterrupt;
+} CPU_ACTION;
+
+#define MaxTimers      3
+#define CompareTimer   0
+#define ViTimer        1
+#define AiTimer        2
+
+typedef struct {
+    int32_t NextTimer[MaxTimers];
+    int32_t Active[MaxTimers];
+    int32_t CurrentTimerType;
+    int32_t Timer;
+} SYSTEM_TIMERS;
+
+void ChangeCompareTimer(void);
+void ChangeTimer(int32_t Type, int32_t Value);
+void CheckTimer(void);
+void CloseCpu(void);
+int32_t DelaySlotEffectsCompare(uint32_t PC, uint32_t Reg1, uint32_t Reg2);
+int32_t DelaySlotEffectsJump(uint32_t JumpPC);
+void DoSomething(void);
+void InPermLoop(void);
+void InitiliazeCPUFlags(void);
+void RefreshScreen(void);
+void RunRsp(void);
+void StartEmulation(void);
+void TimerDone(void);
+void RecompileTimerDone(void);
+void controlfp(uint32_t mask);
+void StartEmulationFromSave(void *savestate);
+
+#define NORMAL                  0
+#define DO_DELAY_SLOT           1
+#define DO_END_DELAY_SLOT       2
+#define DELAY_SLOT              3
+#define END_DELAY_SLOT          4
+#define LIKELY_DELAY_SLOT       5
+#define JUMP                    6
+#define DELAY_SLOT_DONE         7
+#define LIKELY_DELAY_SLOT_DONE  8
+#define END_BLOCK               9
+
+enum SaveType { Auto, Eeprom_4K, Eeprom_16K, Sram, FlashRam };
+
+extern uint32_t NextInstruction, JumpToLocation, AudioIntrReg;
+extern uint32_t *WaitMode, CPU_Type;
+extern uint32_t CPURunning;
+
+extern uint32_t ManualPaused, CPU_Paused, CountPerOp;
+extern CPU_ACTION *CPU_Action;
+extern SYSTEM_TIMERS *Timers;
+extern OPCODE Opcode;
+
+#endif	/*  */

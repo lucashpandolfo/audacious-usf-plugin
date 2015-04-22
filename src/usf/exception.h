@@ -23,6 +23,10 @@
  * should be forwarded to them so if they want them.
  *
  */  
+
+#ifndef _EXCEPTION_H_
+#define _EXCEPTION_H_
+
 #define	EXC_CODE(x)	((x)<<2)
 #define	EXC_INT					EXC_CODE(0)	/* interrupt */
 #define	EXC_MOD					EXC_CODE(1)	/* TLB mod */
@@ -82,4 +86,4 @@ void DoTLBMiss(uint32_t DelaySlot, uint32_t BadVaddr);
 
 void DoSysCallException(uint32_t DelaySlot);
 
-
+#endif /* _EXCEPTION_H_ */

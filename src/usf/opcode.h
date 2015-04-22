@@ -27,45 +27,45 @@
 #define __OpCode
     
 #include "types.h"
-    typedef struct {
-    union {
-	uint32_t Hex;
-	uint8_t Ascii[4];
-	struct {
-	    unsigned offset:16;
-	     unsigned rt:5;
-	     unsigned rs:5;
-	     unsigned op:6;
-	};
-	  struct {
-	    unsigned immediate:16;
-	     unsigned:5;
-	     unsigned base:5;
-	     unsigned:6;
-	};
-	  struct {
-	    unsigned target:26;
-	     unsigned:6;
-	};
-	  struct {
-	    unsigned funct:6;
-	     unsigned sa:5;
-	     unsigned rd:5;
-	     unsigned:5;
-	     unsigned:5;
-	     unsigned:6;
-	};
-	  struct {
-	    unsigned:6;
-	     unsigned fd:5;
-	     unsigned fs:5;
-	     unsigned ft:5;
-	     unsigned fmt:5;
-	     unsigned:6;
-	};
-    };
- } OPCODE;
-
+    typedef struct {
+    union {
+	uint32_t Hex;
+	uint8_t Ascii[4];
+	struct {
+	    unsigned offset:16;
+	     unsigned rt:5;
+	     unsigned rs:5;
+	     unsigned op:6;
+	};
+	  struct {
+	    unsigned immediate:16;
+	     unsigned:5;
+	     unsigned base:5;
+	     unsigned:6;
+	};
+	  struct {
+	    unsigned target:26;
+	     unsigned:6;
+	};
+	  struct {
+	    unsigned funct:6;
+	     unsigned sa:5;
+	     unsigned rd:5;
+	     unsigned:5;
+	     unsigned:5;
+	     unsigned:6;
+	};
+	  struct {
+	    unsigned:6;
+	     unsigned fd:5;
+	     unsigned fs:5;
+	     unsigned ft:5;
+	     unsigned fmt:5;
+	     unsigned:6;
+	};
+    };
+ } OPCODE;
+
 //R4300i OpCodes
 #define	R4300i_SPECIAL				 0
 #define	R4300i_REGIMM				 1
@@ -261,5 +261,5 @@
 #define R4300i_COP1_FUNCT_C_LE		62
 #define R4300i_COP1_FUNCT_C_NGT		63
     
-#endif	/*  */
-    
+#endif	/*  */
+    

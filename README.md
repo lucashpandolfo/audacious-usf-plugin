@@ -19,5 +19,5 @@ After having to reinstall audacious to a new pc, i found myself needing once agi
 > make
 ```
 
-Then copy ```src/usf/usf.so``` to ```~/.local/share/audacious/Plugins```
+Then copy ```src/usf/usf.so``` to ```/usr/lib{64}/audacious/Input/```
 

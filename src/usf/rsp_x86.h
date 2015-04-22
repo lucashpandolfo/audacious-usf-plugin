@@ -31,6 +31,9 @@
 
 #include "types.h"
 
+#ifndef _RSP_X86_H_
+#define _RSP_X86_H_
+
 enum mmxRegValues {
     x86_MM0 = 1, x86_MM1 = 2, x86_MM2 = 3, x86_MM3 = 4,
     x86_MM4 = 5, x86_MM5 = 6, x86_MM6 = 7, x86_MM7 = 8
@@ -570,3 +573,7 @@ void RSPSseShuffleReg(int32_t Dest, int32_t Source, uint8_t Immed);
 
 void RSPx86_SetBranch32b(void *JumpByte, void *Destination);
 void RSPx86_SetBranch8b(void *JumpByte, void *Destination);
+
+extern const char *x86_Strings[8];
+
+#endif /* _RSP_X86_H_ */
