@@ -20,7 +20,7 @@ src/qtui/ui_playlist_tabs.h
 *.exe
 *.mo
 *.o
-*.so
+src/usf/*.so
 *~
 *.patch
 *.diff
