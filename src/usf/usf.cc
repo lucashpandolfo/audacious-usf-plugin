@@ -364,6 +364,7 @@ bool usf_play(USFPlugin* context, const gchar * filename, VFSFile* file)
 	while (fake_seek_stopping != 2)
 	    usleep(1);
 	fake_seek_stopping = 4;
+	
     }
 
     Release_Memory();

@@ -48,6 +48,11 @@ Tuple USFPlugin::read_tuple (const char * filename, VFSFile & file){
     return usf_get_song_tuple(filename, &file);
 }
 
+bool USFPlugin::read_tag (const char * filename, VFSFile & file, Tuple & tuple, Index<char> * image){
+    tuple = usf_get_song_tuple(filename, &file);
+    return true;
+}
+
 bool USFPlugin::play (const char * filename, VFSFile & file){
     return usf_play(this, filename, &file);
 }
@@ -66,6 +71,11 @@ void USFPlugin::open_sound(){
 }
 
 void USFPlugin::add_buffer(unsigned char *buf, unsigned int length){
+	if(check_stop()){
+		usf_stop(this);
+		return;
+	}
+	
     int32_t i = 0, out = 0;
     double vol = 1.0;
 

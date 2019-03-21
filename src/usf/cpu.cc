@@ -83,11 +83,12 @@ void ChangeTimer(int32_t Type, int32_t Value)
 void CheckTimer(void)
 {
     int32_t count;
-
+    
     for (count = 0; count < MaxTimers; count++) {
 	if (!Timers->Active[count]) {
 	    continue;
 	}
+	
 	if (!
 	    (count == CompareTimer
 	     && Timers->NextTimer[count] == 0x7FFFFFFF)) {

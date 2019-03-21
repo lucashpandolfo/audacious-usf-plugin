@@ -27,6 +27,7 @@ extern uint32_t enablecompare, enableFIFOfull;
 bool usf_init();
 int LoadUSF(const gchar * fn, VFSFile * fil);
 bool usf_play(USFPlugin* context, const gchar * filename, VFSFile* file);
+void usf_stop(USFPlugin* context);
 Tuple usf_get_song_tuple(const gchar * fn, VFSFile * fil);
 
 #endif

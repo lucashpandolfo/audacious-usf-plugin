@@ -10,8 +10,13 @@ class USFPlugin : public InputPlugin
     public:
     static const char * const exts[];
     static constexpr PluginInfo info = {
-        N_("USF plugin. Adapted from the old USF audacious plugin."),
-        ""
+        N_("USF plugin"),
+        "",
+        N_(
+			"N64 USF music decoder plugin\n"
+			"\n"
+			"https://github.com/saschaklick/audacious-usf-plugin"
+        )
     };
     static constexpr auto iinfo = InputInfo ()
         .with_exts (exts);
@@ -23,7 +28,7 @@ class USFPlugin : public InputPlugin
     bool is_our_file (const char * filename, VFSFile & file);
     Tuple read_tuple (const char * filename, VFSFile & file);
     bool play (const char * filename, VFSFile & file);
-
+    bool read_tag (const char * filename, VFSFile & file, Tuple & tuple, Index<char> * image);
 
     void open_sound();
     void add_buffer(unsigned char *buf, unsigned int length);
